@@ -25,10 +25,12 @@ pasos = 300/1  #Numero de veces que se va a procesar la informacion en cada iter
 pasos_validacion = 300/1 #Despues de cada iteracion, validamos lo anterior
 filtrosconv1 = 32
 filtrosconv2 = 64     #Numero de filtros que vamos a aplicar en cada convolucion
-tam_filtro1 = (3,3)
-tam_filtro2 = (2,2)   #Tamaños de los filtros 1 y 2
+filtrosconv3 = 128
+tam_filtro1 = (4,4
+tam_filtro2 = (3,3)
+tam_filtro3 = (2,2)   #Tamaños de los filtros 1 y 2
 tam_pool = (2,2)  #Tamaño del filtro en max pooling
-clases = 2  #Mano abierta y cerrada (5 dedos y 0 dedos)
+clases = 24  #Mano abierta y cerrada (5 dedos y 0 dedos)
 lr = 0.0005  #ajustes de la red neuronal para acercarse a una solucion optima
 
 #Pre-Procesamiento de las imagenes
@@ -64,13 +66,17 @@ cnn.add(Convolution2D(filtrosconv1, tam_filtro1, padding = 'same', input_shape=(
          #Es una convolucion y realizamos config
 cnn.add(MaxPooling2D(pool_size=tam_pool)) #Despues de la primera capa vamos a tener una capa de max pooling y asignamos el tamaño
 
-cnn.add(Convolution2D(filtrosconv2, tam_filtro2, padding = 'same', activation='relu')) #Agregamos nueva capa
 
+cnn.add(Convolution2D(filtrosconv2, tam_filtro2, padding = 'same', activation='relu')) #Agregamos nueva capa
+cnn.add(MaxPooling2D(pool_size=tam_pool))
+
+
+cnn.add(Convolution2D(filtrosconv3, tam_filtro3, padding = 'same', activation='relu')) #Agregamos nueva capa
 cnn.add(MaxPooling2D(pool_size=tam_pool))
 
 #Ahora vamos a convertir esa imagen profunda a una plana, para tener 1 dimension con toda la info
 cnn.add(Flatten())  #Aplanamos la imagen
-cnn.add(Dense(256,activation='relu'))  #Asignamos 256 neuronas
+cnn.add(Dense(1536,activation='relu'))  #Asignamos 1536 neuronas
 cnn.add(Dropout(0.5)) #Apagamos el 50% de las neuronas en la funcion anterior para no sobreajustar la red
 cnn.add(Dense(clases, activation='softmax'))  #Es nuestra ultima capa, es la que nos dice la probabilidad de que sea alguna de las clases
 
@@ -83,5 +89,5 @@ cnn.compile(loss = 'categorical_crossentropy', optimizer= optimizar, metrics=['a
 cnn.fit(imagen_entreno, steps_per_epoch=pasos, epochs= iteraciones, validation_data= imagen_validacion, validation_steps=pasos_validacion)
 
 #Guardamos el modelo
-cnn.save('Modelo.h5')
-cnn.save_weights('pesos.h5')
+cnn.save('E:/Documentos/UNMSM/CICLO IX/SOFTWARE INTELIGENTE/data/Modelo.h5')
+cnn.save_weights('E:/Documentos/UNMSM/CICLO IX/SOFTWARE INTELIGENTE/data/pesos.h5')
