@@ -4,7 +4,7 @@ import os
 
 #----------------------------- Creamos la carpeta donde almacenaremos el entrenamiento ---------------------------------
 nombre = 'LETRA A'
-direccion = 'E:/Documentos/UNMSM/CICLO IX/SOFTWARE INTELIGENTE/data/Validacion'
+direccion = 'E:/Documentos/UNMSM/CIX/Project_LSP/data/Validacion' 
 carpeta = direccion + '/' + nombre
 if not os.path.exists(carpeta):
     print('Carpeta creada: ',carpeta)
@@ -50,8 +50,8 @@ while (1):
                 pto_i3 = posiciones[12]#5 Dedos: 12| 0 Dedos: 10 | 1 Dedo: 20|2 Dedos: 16| 3 Dedos: 12| 4 Dedos: 12
                 pto_i4 = posiciones[0] #5 Dedos: 0 | 0 Dedos: 0 | 1 Dedo: 0 | 2 Dedos: 0 | 3 Dedos: 0 | 4 Dedos: 0
                 pto_i5 = posiciones[9] #Punto central
-                x1,y1 = (pto_i5[1]-100),(pto_i5[2]-100) #Obtenemos el punto incial y las longitudes
-                ancho, alto = (x1+200),(y1+200)
+                x1,y1 = (pto_i5[1]-150),(pto_i5[2]-150) #Obtenemos el punto incial y las longitudes
+                ancho, alto = (x1+250),(y1+250)
                 x2,y2 = x1 + ancho, y1 + alto
                 dedos_reg = copia[y1:y2, x1:x2]
                 cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 3)

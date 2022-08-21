@@ -5,12 +5,12 @@ import numpy as np
 from keras_preprocessing.image import load_img, img_to_array
 from keras.models import load_model
 
-modelo = 'C:/Users/santi/Desktop/Universidad/9 Semestre/Vision Python/Manos/Modelo.h5'
-peso =  'C:/Users/santi/Desktop/Universidad/9 Semestre/Vision Python/Manos/pesos.h5'
+modelo = 'E:/Documentos/UNMSM/CICLO IX/SOFTWARE INTELIGENTE/data/Modelo.h5'
+peso =  'E:/Documentos/UNMSM/CICLO IX/SOFTWARE INTELIGENTE/data/pesos.h5'
 cnn = load_model(modelo)  #Cargamos el modelo
 cnn.load_weights(peso)  #Cargamos los pesos
 
-direccion = 'C:/Users/santi/Desktop/Universidad/9 Semestre/Vision Python/Manos/Fotos/Validacion'
+direccion = 'E:/Documentos/UNMSM/CICLO IX/SOFTWARE INTELIGENTE/data/Validacion'
 dire_img = os.listdir(direccion)
 print("Nombres: ", dire_img)
 
@@ -50,8 +50,8 @@ while (1):
                 pto_i3 = posiciones[10]#5 Dedos: 12| 0 Dedos: 10 | 1 Dedo: 20|2 Dedos: 16| 3 Dedos: 12| 4 Dedos: 12
                 pto_i4 = posiciones[0] #5 Dedos: 0 | 0 Dedos: 0 | 1 Dedo: 0 | 2 Dedos: 0 | 3 Dedos: 0 | 4 Dedos: 0
                 pto_i5 = posiciones[9]
-                x1,y1 = (pto_i5[1]-80),(pto_i5[2]-80) #Obtenemos el punto incial y las longitudes
-                ancho, alto = (x1+80),(y1+80)
+                x1,y1 = (pto_i5[1]-150),(pto_i5[2]-150) #Obtenemos el punto incial y las longitudes
+                ancho, alto = (x1+250),(y1+250)
                 x2,y2 = x1 + ancho, y1 + alto
                 dedos_reg = copia[y1:y2, x1:x2]
                 dedos_reg = cv2.resize(dedos_reg, (200, 200), interpolation=cv2.INTER_CUBIC)  # Redimensionamos las fotos
@@ -60,14 +60,104 @@ while (1):
                 vector = cnn.predict(x)  # Va a ser un arreglo de 2 dimensiones, donde va a poner 1 en la clase que crea correcta
                 resultado = vector[0]  # [1,0] | [0, 1]
                 respuesta = np.argmax(resultado)  # Nos entrega el indice del valor mas alto 0 | 1
-                if respuesta == 1:
+                if respuesta == 0: #A
                     print(vector,resultado)
                     cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 3)
                     cv2.putText(frame, '{}'.format(dire_img[0]), (x1, y1 - 5), 1, 1.3, (0, 255, 0), 1, cv2.LINE_AA)
-                elif respuesta == 0:
+                elif respuesta == 1:#B
                     print(vector, resultado)
                     cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 3)
                     cv2.putText(frame, '{}'.format(dire_img[1]), (x1, y1 - 5), 1, 1.3, (0, 0, 255), 1, cv2.LINE_AA)
+                elif respuesta == 2:#C
+                    print(vector, resultado)
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 255), 3)
+                    cv2.putText(frame, '{}'.format(dire_img[2]), (x1, y1 - 5), 1, 1.3, (0, 255, 255), 1, cv2.LINE_AA)
+                elif respuesta == 3:#D
+                    print(vector, resultado)
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 255), 3)
+                    cv2.putText(frame, '{}'.format(dire_img[3]), (x1, y1 - 5), 1, 1.3, (255, 0, 255), 1, cv2.LINE_AA)
+                elif respuesta == 4:#E
+                    print(vector, resultado)
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 3)
+                    cv2.putText(frame, '{}'.format(dire_img[4]), (x1, y1 - 5), 1, 1.3, (0, 0, 255), 1, cv2.LINE_AA)
+                elif respuesta == 5:#F
+                    print(vector, resultado)
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 255), 3)
+                    cv2.putText(frame, '{}'.format(dire_img[5]), (x1, y1 - 5), 1, 1.3, (0, 255, 255), 1, cv2.LINE_AA)
+                elif respuesta == 6:#G
+                    print(vector, resultado)
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 3)
+                    cv2.putText(frame, '{}'.format(dire_img[6]), (x1, y1 - 5), 1, 1.3, (0, 0, 255), 1, cv2.LINE_AA)
+                elif respuesta == 7:#H
+                    print(vector, resultado)
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 255), 3)
+                    cv2.putText(frame, '{}'.format(dire_img[7]), (x1, y1 - 5), 1, 1.3, (255, 0, 255), 1, cv2.LINE_AA)
+                elif respuesta == 8:#I
+                    print(vector, resultado)
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 3)
+                    cv2.putText(frame, '{}'.format(dire_img[8]), (x1, y1 - 5), 1, 1.3, (0, 0, 255), 1, cv2.LINE_AA)
+                elif respuesta == 9:#K
+                    print(vector, resultado)
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 3)
+                    cv2.putText(frame, '{}'.format(dire_img[9]), (x1, y1 - 5), 1, 1.3, (0, 0, 255), 1, cv2.LINE_AA)
+                elif respuesta == 10:#L
+                    print(vector, resultado)
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 255), 3)
+                    cv2.putText(frame, '{}'.format(dire_img[10]), (x1, y1 - 5), 1, 1.3, (0, 255, 255), 1, cv2.LINE_AA)
+                elif respuesta == 11:#M
+                    print(vector, resultado)
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 3)
+                    cv2.putText(frame, '{}'.format(dire_img[11]), (x1, y1 - 5), 1, 1.3, (255, 0, 0), 1, cv2.LINE_AA)
+                elif respuesta == 12:#N
+                    print(vector, resultado)
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 3)
+                    cv2.putText(frame, '{}'.format(dire_img[12]), (x1, y1 - 5), 1, 1.3, (0, 0, 255), 1, cv2.LINE_AA)
+                elif respuesta == 13:#O
+                    print(vector, resultado)
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 3)
+                    cv2.putText(frame, '{}'.format(dire_img[13]), (x1, y1 - 5), 1, 1.3, (0, 0, 255), 1, cv2.LINE_AA)
+                elif respuesta == 14:#P
+                    print(vector, resultado)
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 3)
+                    cv2.putText(frame, '{}'.format(dire_img[14]), (x1, y1 - 5), 1, 1.3, (0, 0, 255), 1, cv2.LINE_AA)
+                elif respuesta == 15:#Q
+                    print(vector, resultado)
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 3)
+                    cv2.putText(frame, '{}'.format(dire_img[15]), (x1, y1 - 5), 1, 1.3, (255, 0, 0), 1, cv2.LINE_AA)
+                elif respuesta == 16:#R
+                    print(vector, resultado)
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 3)
+                    cv2.putText(frame, '{}'.format(dire_img[16]), (x1, y1 - 5), 1, 1.3, (255, 0, 0), 1, cv2.LINE_AA)
+                elif respuesta == 17:#S
+                    print(vector, resultado)
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 3)
+                    cv2.putText(frame, '{}'.format(dire_img[17]), (x1, y1 - 5), 1, 1.3, (0, 255, 0), 1, cv2.LINE_AA)
+                elif respuesta == 18:#T
+                    print(vector, resultado)
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 255), 3)
+                    cv2.putText(frame, '{}'.format(dire_img[18]), (x1, y1 - 5), 1, 1.3, (0, 0, 255), 1, cv2.LINE_AA)
+                elif respuesta == 19:#U
+                    print(vector, resultado)
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 255), 3)
+                    cv2.putText(frame, '{}'.format(dire_img[19]), (x1, y1 - 5), 1, 1.3, 0, 255, 255), 1, cv2.LINE_AA)
+                elif respuesta == 20:#V
+                    print(vector, resultado)
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 3)
+                    cv2.putText(frame, '{}'.format(dire_img[20]), (x1, y1 - 5), 1, 1.3, (0, 0, 255), 1, cv2.LINE_AA)
+                elif respuesta == 21:#W
+                    print(vector, resultado)
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 255), 3)
+                    cv2.putText(frame, '{}'.format(dire_img[21]), (x1, y1 - 5), 1, 1.3, (255, 0, 255), 1, cv2.LINE_AA)
+                elif respuesta == 22:#X
+                    print(vector, resultado)
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 3)
+                    cv2.putText(frame, '{}'.format(dire_img[22]), (x1, y1 - 5), 1, 1.3, (0, 0, 255), 1, cv2.LINE_AA)
+                elif respuesta == 23:#Y
+                    print(vector, resultado)
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 255), 3)
+                    cv2.putText(frame, '{}'.format(dire_img[23]), (x1, y1 - 5), 1, 1.3, (255, 0, 255), 1, cv2.LINE_AA)
+                else:
+                    cv2.putText(frame, 'LETRA DESCONOCIDA', (x1, y1 - 5), 1, 1.3, (0, 255, 255), 1, cv2.LINE_AA)
 
     cv2.imshow("Video",frame)
     k = cv2.waitKey(1)
